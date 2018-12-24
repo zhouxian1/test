@@ -16,5 +16,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> implements LoginLogService {
-	
+
+    @Override
+    public Integer findMaxLoginTatalByUserId(String id) {
+        return null;
+    }
 }

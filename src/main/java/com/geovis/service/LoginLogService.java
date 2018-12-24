@@ -12,5 +12,13 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2018-12-24
  */
 public interface LoginLogService extends IService<LoginLog> {
+
+    /**
+     * 查询登录次数
+     *
+     * @param id
+     * @return
+     */
+    Integer findMaxLoginTatalByUserId(String id);
 	
 }
