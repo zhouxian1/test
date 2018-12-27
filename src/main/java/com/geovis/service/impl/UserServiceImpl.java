@@ -1,10 +1,13 @@
 package com.geovis.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.geovis.Enum.EnumCode;
 import com.geovis.entity.LoginLog;
 import com.geovis.entity.User;
 import com.geovis.mapper.UserMapper;
+import com.geovis.pojo.dto.ParamsDto;
+import com.geovis.pojo.dto.UserDto;
 import com.geovis.service.LoginLogService;
 import com.geovis.service.UserRoleService;
 import com.geovis.service.UserService;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -106,6 +110,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Integer updateStatusByName(User user) {
         return userMapper.updateStatusByName(user);
+    }
+
+    @Override
+    public List<UserDto> findUserByPage(Page<UserDto> page, ParamsDto dto) {
+        List<UserDto> list = super.baseMapper.findUserByPage(page,dto);
+        return list;
     }
 
 

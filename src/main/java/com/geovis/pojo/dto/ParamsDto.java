@@ -1,14 +1,14 @@
-package com.geovis.entity;
+package com.geovis.pojo.dto;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * @desc: 参数dto
- * @author: zhouxian
- * @since 2018-12-19
+ * @author: jwy
+ * @date: 2017/12/19
  */
-public class ParamsDto implements Serializable {
+public class ParamsDto implements Serializable{
 
     /**
      * id

@@ -29,6 +29,31 @@
         <!--</if>-->
     </select>
 
+    <select id="findUserByPage" resultType="com.geovis.pojo.dto.UserDto">
+        SELECT
+        u.id,
+        u.user_name AS userName,
+        u.user_enable AS userEnable,
+        u.user_status,
+        (
+        IF (
+        u.`status`,
+        '有效',
+        '禁止登陆'
+        )
+        ) AS state,
+        r.description AS role
+        FROM
+        sys_user AS u
+        INNER JOIN sys_user_role ur ON u.id = ur.uid
+        INNER JOIN sys_role r ON ur.rid = r.id
+        WHERE
+        r.type = #{dto.type}
+        <if test="''!= dto.keyword">
+            AND u.user_name LIKE CONCAT('%',#{dto.keyword},'%')
+        </if>
+    </select>
+
     <update id="updateStatusByName" parameterType="com.geovis.entity.User">
         UPDATE sys_user set
         <if test="user.id!=null">

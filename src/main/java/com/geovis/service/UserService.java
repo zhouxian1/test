@@ -1,9 +1,10 @@
 package com.geovis.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.geovis.entity.ParamsDto;
 import com.geovis.entity.User;
 import com.baomidou.mybatisplus.service.IService;
+import com.geovis.pojo.dto.ParamsDto;
+import com.geovis.pojo.dto.UserDto;
 import org.apache.ibatis.annotations.Param;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,4 +60,13 @@ public interface UserService extends IService<User> {
      * @since 2018-12-27
      */
     Integer updateStatusByName(@Param("user") User user);
+
+    /**
+     * @desc: 查询用户
+     *
+     * @param dto 参数dto
+     * @author: zhouxian
+     * @date: 2018-12-29
+     */
+    List<UserDto> findUserByPage(Page<UserDto> page, ParamsDto dto);
 }

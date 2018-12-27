@@ -1,14 +1,15 @@
 package com.geovis.mapper;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.geovis.entity.User;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.geovis.pojo.dto.ParamsDto;
+import com.geovis.pojo.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -54,5 +55,14 @@ public interface UserMapper extends BaseMapper<User> {
      * @since 2018-12-27
      */
     Integer updateStatusByName(@Param("user") User user);
+
+    /**
+     * @desc: 查询用户
+     *
+     * @param dto 参数dto
+     * @author: zhouxian
+     * @date: 2018-12-29
+     */
+    List<UserDto> findUserByPage(Page<UserDto> page, ParamsDto dto);
 
 }
