@@ -7,11 +7,12 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+
 import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * <p>
  * </p>
  *
  * @author zhouxian
@@ -25,61 +26,61 @@ public class RoleResources extends Model<RoleResources> {
     /**
      * ID
      */
-	@TableId(value="id", type= IdType.AUTO)
-	private Integer id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     /**
      * 角色ID
      */
-	@TableField("role_id")
-	private Integer roleId;
+    @TableField("role_id")
+    private Integer roleId;
     /**
      * 资源ID
      */
-	@TableField("resources_id")
-	private Integer resourcesId;
+    @TableField("resources_id")
+    private Integer resourcesId;
 
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getRoleId() {
-		return roleId;
-	}
+    public Integer getRoleId() {
+        return roleId;
+    }
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
-	public Integer getResourcesId() {
-		return resourcesId;
-	}
+    public Integer getResourcesId() {
+        return resourcesId;
+    }
 
-	public void setResourcesId(Integer resourcesId) {
-		this.resourcesId = resourcesId;
-	}
+    public void setResourcesId(Integer resourcesId) {
+        this.resourcesId = resourcesId;
+    }
 
-	public static final String ID = "id";
+    public static final String ID = "id";
 
-	public static final String ROLE_ID = "role_id";
+    public static final String ROLE_ID = "role_id";
 
-	public static final String RESOURCES_ID = "resources_id";
+    public static final String RESOURCES_ID = "resources_id";
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
-	@Override
-	public String toString() {
-		return "RoleResources{" +
-			"id=" + id +
-			", roleId=" + roleId +
-			", resourcesId=" + resourcesId +
-			"}";
-	}
+    @Override
+    public String toString() {
+        return "RoleResources{" +
+                "id=" + id +
+                ", roleId=" + roleId +
+                ", resourcesId=" + resourcesId +
+                "}";
+    }
 }

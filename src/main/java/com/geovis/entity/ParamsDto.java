@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author: zhouxian
  * @since 2018-12-19
  */
-public class ParamsDto implements Serializable{
+public class ParamsDto implements Serializable {
 
     /**
      * id

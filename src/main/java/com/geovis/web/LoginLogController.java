@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author zhouxian
@@ -16,5 +16,5 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("//loginLog")
 public class LoginLogController {
-	
+
 }

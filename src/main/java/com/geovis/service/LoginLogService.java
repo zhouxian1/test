@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.service.IService;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author zhouxian
@@ -23,5 +23,4 @@ public interface LoginLogService extends IService<LoginLog> {
     Integer findMaxLoginTatalByUserId(String id);
 
 
-	
 }

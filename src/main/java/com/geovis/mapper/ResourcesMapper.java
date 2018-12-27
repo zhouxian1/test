@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>
-  *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author zhouxian

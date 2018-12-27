@@ -7,7 +7,7 @@ import java.util.Set;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author zhouxian
@@ -18,13 +18,11 @@ public interface RoleService extends IService<Role> {
     /**
      * 根据用户ID查询角色集
      *
-     * @param  id
-     *
+     * @param id
      * @author zhouxian
-     *
      * @since 2018-12-26
-     * */
+     */
 
     Set<String> findRoleNameByUserId(String id);
-	
+
 }

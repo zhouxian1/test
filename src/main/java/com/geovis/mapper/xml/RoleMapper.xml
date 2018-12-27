@@ -2,18 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.geovis.mapper.RoleMapper">
 
-	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.geovis.entity.Role">
-		<id column="id" property="id" />
-		<result column="role_desc" property="roleDesc" />
-	</resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.entity.Role">
+        <id column="id" property="id"/>
+        <result column="role_desc" property="roleDesc"/>
+    </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, role_desc AS roleDesc
     </sql>
 
-	<select id="findRoleNameByUserId" parameterType="String" resultType="String">
+    <select id="findRoleNameByUserId" parameterType="String" resultType="String">
 		SELECT
 		role_desc
 		from sys_role sr left join sys_user_role sur on sr.id=sur.role_id

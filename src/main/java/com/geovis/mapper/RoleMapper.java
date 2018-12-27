@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * <p>
-  *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author zhouxian
@@ -22,12 +22,10 @@ public interface RoleMapper extends BaseMapper<Role> {
     /**
      * 根据用户ID查询角色集
      *
-     * @param  id
-     *
+     * @param id
      * @author zhouxian
-     *
      * @since 2018-12-26
-     * */
+     */
 
     Set<String> findRoleNameByUserId(String id);
 

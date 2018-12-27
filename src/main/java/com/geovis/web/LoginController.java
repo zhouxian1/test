@@ -25,19 +25,20 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
 
     @Autowired
-    private  UserService userService;
+    private UserService userService;
 
-    private static final Logger logger= LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @ApiOperation(value = "根据用户密码验证登陆", notes = "登陆验证")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Object submitLogin(String username,String password, HttpSession session, HttpServletRequest request) {
+    public Object submitLogin(String username, String password, HttpSession session, HttpServletRequest request) {
         // 执行到这里说明用户已登录成功
         logger.info("开始验证登陆！");
-        return userService.login(username,password,session,request);
+        return userService.login(username, password, session, request);
     }
+
     @ApiOperation(value = "退出登陆", notes = "退出登陆")
-    @RequestMapping(value = "/loginOut",method = RequestMethod.GET)
+    @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
     public Object logout() {
         try {
             Subject subject = SecurityUtils.getSubject();

@@ -97,9 +97,9 @@ public class GeneratorUtil {
 
         // 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template 使用 copy
         // 至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
-         TemplateConfig tc = new TemplateConfig();
+        TemplateConfig tc = new TemplateConfig();
 
-         mpg.setTemplate(tc);
+        mpg.setTemplate(tc);
 
         // 执行生成
         mpg.execute();

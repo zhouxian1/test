@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author zhouxian
@@ -38,29 +38,25 @@ public interface UserService extends IService<User> {
      *
      * @param user
      * @author zhouxian
-     * @since  2018-12-16
-     *
-     * */
+     * @since 2018-12-16
+     */
     User getUser(User user);
 
     /**
      * 根据用户ID查询
      *
-     * @param  id
-     *
-     * @author  zhouxian
-     *
+     * @param id
+     * @author zhouxian
      * @since 2018-12-16
-     *
-     * */
+     */
     Set<String> findPermissionsByUserId(String id);
 
     /**
      * 更新账户状态
-     * @param user
-     * @author  zhouxian
-     * @since 2018-12-27
      *
-     * */
-    Integer updateStatusByName (@Param("user") User user);
+     * @param user
+     * @author zhouxian
+     * @since 2018-12-27
+     */
+    Integer updateStatusByName(@Param("user") User user);
 }

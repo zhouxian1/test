@@ -26,13 +26,13 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
     @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
-     private  String SHIRO_LOGIN_COUNT="SHIRO_LOGIN_COUNT";
-    private  String SHIRO_IS_LOCK="SHIRO_IS_LOCK";
+    private String SHIRO_LOGIN_COUNT = "SHIRO_LOGIN_COUNT";
+    private String SHIRO_IS_LOCK = "SHIRO_IS_LOCK";
+
     /**
      * 认证信息.(身份验证) : Authentication 是用来验证用户身份
-     *
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
@@ -48,38 +48,38 @@ public class MyShiroRealm extends AuthorizingRealm {
         ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
         if (userList == null) {
             //访问一次，计数一次
-            opsForValue.increment(SHIRO_LOGIN_COUNT+name, 1);
+            opsForValue.increment(SHIRO_LOGIN_COUNT + name, 1);
             //计数大于5时，设置用户被锁定一小时
-            if(Integer.parseInt((String)opsForValue.get(SHIRO_LOGIN_COUNT+name))>=5){
-                opsForValue.set(SHIRO_IS_LOCK+name, "LOCK");
-                redisTemplate.expire(SHIRO_IS_LOCK+name, 1, TimeUnit.HOURS);
+            if (Integer.parseInt((String) opsForValue.get(SHIRO_LOGIN_COUNT + name)) >= 5) {
+                opsForValue.set(SHIRO_IS_LOCK + name, "LOCK");
+                redisTemplate.expire(SHIRO_IS_LOCK + name, 1, TimeUnit.HOURS);
                 user.setUserStatus(1);
                 userService.updateStatusByName(user);
             }
-            if ("LOCK".equals((String)opsForValue.get(SHIRO_IS_LOCK+name))){
+            if ("LOCK".equals((String) opsForValue.get(SHIRO_IS_LOCK + name))) {
                 throw new DisabledAccountException("由于密码输入错误次数大于5次，帐号已经禁止登录！");
             }
-            throw  new UnknownAccountException();
-        }else{
-                long s=redisTemplate.getExpire("SHIRO_IS_LOCK"+name);
-                if(s==0){
-                    // 用户为禁用状态
-                    if (userList.getUserEnable() != 1) {
-                        throw new DisabledAccountException();
-                    }
-                    logger.info("---------------- Shiro 凭证认证成功 ----------------------");
-                    //清空登录计数
-                    opsForValue.set(SHIRO_LOGIN_COUNT+name, "0");
-                    user.setUserStatus(0);
-                    userService.updateStatusByName(user);
-                    SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                            userList, //用户
-                            userList.getPassWord(), //密码
-                            getName()  //realm name
-                    );
-                    return authenticationInfo;
+            throw new UnknownAccountException();
+        } else {
+            long s = redisTemplate.getExpire("SHIRO_IS_LOCK" + name);
+            if (s == 0) {
+                // 用户为禁用状态
+                if (userList.getUserEnable() != 1) {
+                    throw new DisabledAccountException();
                 }
-               throw  new DisabledAccountException("由于密码输入错误次数大于5次，帐号已经禁止登录！");
+                logger.info("---------------- Shiro 凭证认证成功 ----------------------");
+                //清空登录计数
+                opsForValue.set(SHIRO_LOGIN_COUNT + name, "0");
+                user.setUserStatus(0);
+                userService.updateStatusByName(user);
+                SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                        userList, //用户
+                        userList.getPassWord(), //密码
+                        getName()  //realm name
+                );
+                return authenticationInfo;
+            }
+            throw new DisabledAccountException("由于密码输入错误次数大于5次，帐号已经禁止登录！");
         }
 
     }

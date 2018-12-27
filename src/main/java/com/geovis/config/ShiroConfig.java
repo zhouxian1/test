@@ -44,11 +44,11 @@ public class ShiroConfig {
         // 未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/login");
         // 拦截器
-        Map<String,String> filterMap = new LinkedHashMap<>();
+        Map<String, String> filterMap = new LinkedHashMap<>();
         // 可以匿名访问
         filterMap.put("/api/v1/login", "anon");
         filterMap.put("/api/v1/logout", "anon");
-        filterMap.put("/swagger-ui.html","anon");
+        filterMap.put("/swagger-ui.html", "anon");
         filterMap.put("/swagger-resources/**", "anon");
         filterMap.put("/v2/api-docs", "anon");
         filterMap.put("/webjars/springfox-swagger-ui/**", "anon");
@@ -173,7 +173,7 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
@@ -181,7 +181,6 @@ public class ShiroConfig {
 
     /**
      * Shiro生命周期处理器
-     *
      */
     @Bean
     public LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {

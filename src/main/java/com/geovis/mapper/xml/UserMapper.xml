@@ -2,51 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.geovis.mapper.UserMapper">
 
-	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.geovis.entity.User">
-		<id column="id" property="id" />
-		<result column="user_name" property="userName" />
-		<result column="pass_word" property="passWord" />
-		<result column="user_enable" property="userEnable" />
-		<result column="user_status" property="userStatus" />
-	</resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.entity.User">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="pass_word" property="passWord"/>
+        <result column="user_enable" property="userEnable"/>
+        <result column="user_status" property="userStatus"/>
+    </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, user_name AS userName, pass_word AS passWord, user_enable AS userEnable,user_status AS userStatus
     </sql>
 
-	<select id="getUser"  parameterType="com.geovis.entity.User" resultType="com.geovis.entity.User">
-		SELECT
-		<include refid="Base_Column_List"></include>
-		FROM sys_user
-		where 1=1
-		<!--<if test="userName!=null">-->
-		and user_name=#{userName}
-		<!--</if>-->
-		<!--<if test="passWord!=null">-->
-			and pass_word=#{passWord}
-		<!--</if>-->
-	</select>
+    <select id="getUser" parameterType="com.geovis.entity.User" resultType="com.geovis.entity.User">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM sys_user
+        where 1=1
+        <!--<if test="userName!=null">-->
+        and user_name=#{userName}
+        <!--</if>-->
+        <!--<if test="passWord!=null">-->
+        and pass_word=#{passWord}
+        <!--</if>-->
+    </select>
 
-	<update id="updateStatusByName" parameterType="com.geovis.entity.User" >
-		UPDATE  sys_user 	set
-		<if test="user.id!=null">
-			id=#{user.id},
-		</if>
-		<if test="user.userName!=null">
-		 user_name=#{user.userName},
-		</if>
-		<if test="user.passWord!=null">
-		   pass_word=#{user.passWord},
-		</if>
-		<if test="user.userEnable!=null">
-			user_enable=#{user.userEnable},
-		</if>
-		<if test="user.userStatus!=null">
-		 user_status=#{user.userStatus}
-		</if>
-		where user_name=#{user.userName}
-	</update>
+    <update id="updateStatusByName" parameterType="com.geovis.entity.User">
+        UPDATE sys_user set
+        <if test="user.id!=null">
+            id=#{user.id},
+        </if>
+        <if test="user.userName!=null">
+            user_name=#{user.userName},
+        </if>
+        <if test="user.passWord!=null">
+            pass_word=#{user.passWord},
+        </if>
+        <if test="user.userEnable!=null">
+            user_enable=#{user.userEnable},
+        </if>
+        <if test="user.userStatus!=null">
+            user_status=#{user.userStatus}
+        </if>
+        where user_name=#{user.userName}
+    </update>
 
 </mapper>

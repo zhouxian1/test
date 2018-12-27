@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>
-  *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author zhouxian
@@ -24,7 +24,6 @@ public interface LoginLogMapper extends BaseMapper<LoginLog> {
      * @return
      */
     Integer findMaxLoginTatalByUserId(String id);
-
 
 
 }

@@ -3,7 +3,6 @@ package com.geovis.Enum;
 
 /**
  * @desc: 菜单类型
- * 
  * @author: jwy
  * @date: 2017/12/26
  */
