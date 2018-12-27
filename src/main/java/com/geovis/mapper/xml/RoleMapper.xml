@@ -13,4 +13,11 @@
         id, role_desc AS roleDesc
     </sql>
 
+	<select id="findRoleNameByUserId" parameterType="String" resultType="String">
+		SELECT
+		role_desc
+		from sys_role sr left join sys_user_role sur on sr.id=sur.role_id
+		where sur.user_id=#{id}
+	</select>
+
 </mapper>

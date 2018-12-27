@@ -42,6 +42,11 @@ public class User extends Model<User> {
      */
 	@TableField("user_enable")
 	private Integer userEnable;
+	/**
+	 * 是否可用
+	 * */
+	@TableField("user_status")
+	private  Integer userStatus;
 
 
 	public Integer getId() {
@@ -76,6 +81,14 @@ public class User extends Model<User> {
 		this.userEnable = userEnable;
 	}
 
+	public Integer getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(Integer userStatus) {
+		this.userStatus = userStatus;
+	}
+
 	public static final String ID = "id";
 
 	public static final String USER_NAME = "user_name";
@@ -96,6 +109,7 @@ public class User extends Model<User> {
 			", userName=" + userName +
 			", passWord=" + passWord +
 			", userEnable=" + userEnable +
+				",userStatus="+userStatus+
 			"}";
 	}
 }

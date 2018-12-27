@@ -16,4 +16,19 @@
         id, uid, loginTime, loginIP, loginTotal
     </sql>
 
+	<select id="findMaxLoginTatalByUserId" parameterType="String" resultType="int">
+		SELECT
+		  loginTotal+1
+		FROM
+		  sys_login_log
+		WHERE uid =#{id}
+		ORDER BY loginTotal DESC
+		LIMIT 1
+	</select>
+	<insert id="insert" parameterType="com.geovis.entity.LoginLog">
+		INSERT INTO  sys_login_log
+		(uid,loginTime,loginIP,loginTotal)
+		VALUES
+		(#{uid},#{loginTime},#{loginIP},#{loginTotal})
+	</insert>
 </mapper>

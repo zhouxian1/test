@@ -4,7 +4,10 @@ import com.geovis.entity.Role;
 import com.geovis.mapper.RoleMapper;
 import com.geovis.service.RoleService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 /**
  * <p>
@@ -16,5 +19,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
-	
+
+    @Autowired
+    private  RoleMapper roleMapper;
+
+    @Override
+    public Set<String> findRoleNameByUserId(String id) {
+        return this.roleMapper.findRoleNameByUserId(id);
+    }
 }

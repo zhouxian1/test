@@ -45,6 +45,7 @@ public enum EnumCode {
      */
     EXCPTION_ERROR(4001, "异常");
 
+
     private final Integer value;
     private final String text;
 

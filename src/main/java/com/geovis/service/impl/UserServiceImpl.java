@@ -10,8 +10,9 @@ import com.geovis.service.UserRoleService;
 import com.geovis.service.UserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.geovis.utils.ResultUtil;
-import com.xiaoleilu.hutool.crypto.SecureUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * <p>
@@ -39,15 +40,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private LoginLogService loginLogService;
 
+    @Autowired
+    private  UserMapper userMapper;
+
 
     @Override
     public Object login(String name, String pass, HttpSession session, HttpServletRequest request) {
-        UsernamePasswordToken upToken = new UsernamePasswordToken(name, SecureUtil.md5(pass));
+        UsernamePasswordToken upToken = new UsernamePasswordToken(name, pass);
         Subject subject = SecurityUtils.getSubject();
-        subject.login(upToken);
+        Object obj=null;
+        try{
+            subject.login(upToken);
+        }catch (UnknownAccountException e){
+            return  ResultUtil.result(EnumCode.LOGIN_FAIL.getValue(), "登陆失败");
+        }catch (DisabledAccountException e){
+           return  ResultUtil.result(EnumCode.LOCKED.getValue(), "由于密码输入错误次数大于5次，帐号已经禁止登录！请在1小时后重试！");
+        }
         User userInfoDto = (User) subject.getPrincipal();
         session.setAttribute("user", userInfoDto);
-
         // 登录日志
         LoginLog loginLog = new LoginLog();
         loginLog.setUid(userInfoDto.getId().toString());
@@ -55,7 +65,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         loginLog.setLoginIP(request.getRemoteAddr());
         loginLog.setLoginTotal(loginLogService.findMaxLoginTatalByUserId(userInfoDto.getId().toString())); // 登录总次数
         loginLogService.insert(loginLog);
-
 //        // 一级 模块
 //        List<RolePermisDto> parentList = rolePermissionService.findRolesPermisByFatherId(null, null);
 //        List<RolePermisDto> sonList = null;
@@ -79,7 +88,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //            parentList.get(i).setChildren((ArrayList<RolePermisDto>) trueChildrenList);
 //        }
 //        userInfoDto.setRolePermis((ArrayList) parentList);
-        return ResultUtil.result(EnumCode.OK.getValue(), "登陆成功", JSON.toJSON(userInfoDto));
+        return   ResultUtil.result(EnumCode.OK.getValue(), "登陆成功", JSON.toJSON(userInfoDto));
+
 
     }
+
+    @Override
+    public User getUser(User user) {
+        return userMapper.getUser(user);
+    }
+
+    @Override
+    public Set<String> findPermissionsByUserId(String id) {
+        return userMapper.findPermissionsByUserId(id);
+    }
+
+    @Override
+    public Integer updateStatusByName(User user) {
+        return userMapper.updateStatusByName(user);
+    }
+
+
 }

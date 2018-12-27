@@ -1,5 +1,6 @@
 package com.geovis.config;
 
+import com.geovis.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -122,8 +123,8 @@ public class RedisConfig {
         //如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
         // 开启事务
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.setConnectionFactory(factory);
@@ -138,11 +139,11 @@ public class RedisConfig {
      * @autor lpl
      * @date 2017年12月21日
      */
-//    @Bean(name = "redisUtil")
-//    public RedisUtil redisUtil(RedisTemplate<String, Object> redisTemplate) {
-//        RedisUtil redisUtil = new RedisUtil();
-//        redisUtil.setRedisTemplate(redisTemplate);
-//        return redisUtil;
-//    }
+    @Bean(name = "redisUtil")
+    public RedisUtil redisUtil(RedisTemplate<String, Object> redisTemplate) {
+        RedisUtil redisUtil = new RedisUtil();
+        redisUtil.setRedisTemplate(redisTemplate);
+        return redisUtil;
+    }
 }
 
