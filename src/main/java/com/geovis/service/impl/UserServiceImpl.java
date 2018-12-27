@@ -54,7 +54,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }catch (UnknownAccountException e){
             return  ResultUtil.result(EnumCode.LOGIN_FAIL.getValue(), "登陆失败");
         }catch (DisabledAccountException e){
-           return  ResultUtil.result(EnumCode.LOCKED.getValue(), "由于密码输入错误次数大于5次，帐号已经禁止登录！请在1小时后重试！");
+           return  ResultUtil.result(EnumCode.LOCKED.getValue(), "由于密码输入错误次数大于5次，帐号已经禁止登录！");
         }
         User userInfoDto = (User) subject.getPrincipal();
         session.setAttribute("user", userInfoDto);
