@@ -62,7 +62,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             throw new UnknownAccountException();
         } else {
             long s = redisTemplate.getExpire("SHIRO_IS_LOCK" + name);
-            if (s == 0) {
+            if (s<= 0) {
                 // 用户为禁用状态
                 if (userList.getUserEnable() != 1) {
                     throw new DisabledAccountException();
