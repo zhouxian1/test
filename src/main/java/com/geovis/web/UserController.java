@@ -45,6 +45,6 @@ public class UserController {
         dto.setType(EnumRoleType.USER.getValue());
         List<UserDto> list = userService.findUserByPage(page,dto);
         return ResultUtil.result(EnumCode.OK.getValue(), "请求成功", list, page.getTotal());
-    }
+}
 	
 }

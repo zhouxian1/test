@@ -12,8 +12,10 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -21,7 +23,16 @@ import java.util.Map;
 
 
 @Configuration
+@PropertySource("classpath:application-dev.properties")
 public class ShiroConfig {
+    @Value("${redis.hostName}")
+    private  String hostName;
+
+    @Value("${redis.port}")
+    private  int port;
+
+    @Value("${redis.timeout}")
+    private  int timeout;
 
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {

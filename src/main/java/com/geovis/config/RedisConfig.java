@@ -13,8 +13,17 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application-dev.properties")
 public class RedisConfig {
+
+    @Value("${redis.hostName}")
+    private  String hostName;
+
+    @Value("${redis.port}")
+    private  int port;
+
+    @Value("${redis.timeout}")
+    private  int timeout;
 
     @Value("${redis.maxIdle}")
     private Integer maxIdle;
@@ -91,13 +100,13 @@ public class RedisConfig {
         //连接池
         JedisConnectionFactory.setPoolConfig(jedisPoolConfig);
         //IP地址
-        JedisConnectionFactory.setHostName("localhost");
+        JedisConnectionFactory.setHostName(hostName);
         //端口号
-        JedisConnectionFactory.setPort(6379);
+        JedisConnectionFactory.setPort(port);
         //如果Redis设置有密码
         //JedisConnectionFactory.setPassword(password);
         //客户端超时时间单位是毫秒
-        JedisConnectionFactory.setTimeout(5000);
+        JedisConnectionFactory.setTimeout(timeout);
         return JedisConnectionFactory;
     }
 
