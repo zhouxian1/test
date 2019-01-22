@@ -3,6 +3,7 @@ package com.geovis.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.geovis.Enum.EnumCode;
+import com.geovis.annotation.WriteDataSource;
 import com.geovis.entity.LoginLog;
 import com.geovis.entity.User;
 import com.geovis.mapper.UserMapper;
@@ -20,6 +21,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,6 +53,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
+    @WriteDataSource
+    @Transactional(propagation= Propagation.REQUIRED,isolation= Isolation.DEFAULT,readOnly=false)
     public Object login(String name, String pass, HttpSession session, HttpServletRequest request) {
         UsernamePasswordToken upToken = new UsernamePasswordToken(name, pass);
         Subject subject = SecurityUtils.getSubject();
