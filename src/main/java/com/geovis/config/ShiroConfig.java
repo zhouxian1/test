@@ -23,7 +23,6 @@ import java.util.Map;
 
 
 @Configuration
-@PropertySource("classpath:application-dev.properties")
 public class ShiroConfig {
     @Value("${redis.hostName}")
     private  String hostName;

@@ -13,7 +13,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
-@PropertySource("classpath:application-dev.properties")
 public class RedisConfig {
 
     @Value("${redis.hostName}")
@@ -137,22 +136,6 @@ public class RedisConfig {
         // 开启事务
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.setConnectionFactory(factory);
-    }
-
-    /**
-     * 注入封装RedisTemplate
-     *
-     * @return RedisUtil
-     * @throws
-     * @Title: redisUtil
-     * @autor lpl
-     * @date 2017年12月21日
-     */
-    @Bean(name = "redisUtil")
-    public RedisUtil redisUtil(RedisTemplate<String, Object> redisTemplate) {
-        RedisUtil redisUtil = new RedisUtil();
-        redisUtil.setRedisTemplate(redisTemplate);
-        return redisUtil;
     }
 }
 

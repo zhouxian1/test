@@ -3,7 +3,6 @@ package com.geovis.secutity;
 import com.geovis.entity.User;
 import com.geovis.service.RoleService;
 import com.geovis.service.UserService;
-import com.geovis.utils.RedisUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
