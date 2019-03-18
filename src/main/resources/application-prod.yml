@@ -1,0 +1,72 @@
+---
+server:
+  session-timeout: 60
+  port: 8089
+mybatis:
+  mapper-locations: classpath:com/geovis/mapper/xml/*.xml
+  type-aliases-package: com.geovis.entity
+logging:
+  path: d:/logs
+  config: classpath:logback-spring.xml
+mysql:
+  datasource:
+    read01:
+      minIdle: 5
+      validationQuery: select 'x'
+      initialSize: 10
+      maxWait: 60000
+      poolPreparedStatements: true
+      filters: stat
+      url: jdbc:mysql://127.0.0.1:3306/shiro?useUnicode=true&characterEncoding=utf-8
+      maxPoolPreparedStatementPerConnectionSize: 50
+      password: root
+      testOnBorrow: false
+      testWhileIdle: true
+      removeAbandoned: true
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      testOnReturn: false
+      driver-class-name: com.mysql.jdbc.Driver
+      maxActive: 100
+      username: root
+    mapperLocations: classpath:/com/geovis/mapper/xml/*.xml
+    type: com.alibaba.druid.pool.DruidDataSource
+    configLocation: classpath:/mybatis-config.xml
+    write:
+      minIdle: 5
+      validationQuery: select 'x'
+      initialSize: 10
+      maxWait: 60000
+      poolPreparedStatements: true
+      filters: stat
+      url: jdbc:mysql://127.0.0.1:3306/shiro?useUnicode=true&characterEncoding=utf-8
+      maxPoolPreparedStatementPerConnectionSize: 50
+      password: root
+      testOnBorrow: false
+      testWhileIdle: true
+      removeAbandoned: true
+      minEvictableIdleTimeMillis: 300000
+      timeBetweenEvictionRunsMillis: 60000
+      testOnReturn: false
+      driver-class-name: com.mysql.jdbc.Driver
+      maxActive: 100
+      username: root
+    readSize: 2
+redis:
+  hostName: localhost
+  maxWaitMillis: 1000
+  password:
+  testOnBorrow: true
+  testWhileIdle: true
+  maxIdle: 300
+  port: 6379
+  timeBetweenEvictionRunsMillis: 30000
+  minEvictableIdleTimeMillis: 300000
+  maxTotal: 1000
+  timeout: 10000.0
+  numTestsPerEvictionRun: 1024
+
+
+  mapper-locations: classpath:com/geovis/mapper/xml/*.xml
+  mybatis:
+  type-aliases-package: com.geovis.entity

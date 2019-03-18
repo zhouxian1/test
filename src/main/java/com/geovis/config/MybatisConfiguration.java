@@ -98,8 +98,8 @@ public class MybatisConfiguration {
      * 分页插件
      * @return
      */
-    @Bean
-    public PageHelper pageHelper() {
+   @Bean
+    public  PageHelper pageHelper() {
         PageHelper pageHelper = new PageHelper();
         Properties p = new Properties();
         p.setProperty("offsetAsPageNum", "true");

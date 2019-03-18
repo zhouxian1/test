@@ -8,13 +8,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>springboot_mybatisplus</name>
+	<name>login</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.RELEASE</version>
+		<version>2.1.3.RELEASE</version>
 		<relativePath/>
 	</parent>
 
@@ -84,6 +84,12 @@
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-ehcache</artifactId>
 			<version>1.4.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- shiro+redis缓存插件 -->
@@ -91,6 +97,12 @@
 			<groupId>org.crazycake</groupId>
 			<artifactId>shiro-redis</artifactId>
 			<version>2.4.2.1-RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.shiro</groupId>
+					<artifactId>shiro-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- fastjson阿里巴巴jSON处理器 -->
@@ -155,12 +167,6 @@
 			<version>2.16.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.java-websocket</groupId>
-			<artifactId>Java-WebSocket</artifactId>
-			<version>1.3.0</version>
-		</dependency>
-
 		<!--分页插件-->
 		<!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->
 		<dependency>
@@ -194,30 +200,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.mybatis.generator</groupId>
-				<artifactId>mybatis-generator-maven-plugin</artifactId>
-				<version>1.3.2</version>
-				<dependencies>
-					<!--<dependency>-->
-						<!--<groupId>org.mybatis.generator</groupId>-->
-						<!--<artifactId>mybatis-generator-core</artifactId>-->
-						<!--<version>1.3.2</version>-->
-					<!--</dependency>-->
-					<!--<dependency>-->
-						<!--<groupId>tk.mybatis</groupId>-->
-						<!--<artifactId>mapper</artifactId>-->
-						<!--<version>3.5.0</version>-->
-					<!--</dependency>-->
-					<!--此处添加一个mysql-connector-java依赖可以防止找不到jdbc Driver-->
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<scope>runtime</scope>
-						<version>8.0.13</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

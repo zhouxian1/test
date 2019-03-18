@@ -1,6 +1,7 @@
 package com.geovis.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.geovis.Enum.EnumCode;
 import com.geovis.annotation.WriteDataSource;
