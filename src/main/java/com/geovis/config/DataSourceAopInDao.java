@@ -1,8 +1,6 @@
-package com.geovis.mapper;
+package com.geovis.config;
 
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import com.geovis.config.DataSourceContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
