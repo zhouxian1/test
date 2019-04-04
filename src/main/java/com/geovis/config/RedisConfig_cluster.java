@@ -4,26 +4,23 @@ import com.geovis.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisNode;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
-@Configuration
-public class RedisConfig {
+import java.util.HashSet;
+import java.util.Set;
 
-    @Value("${redis.hostName}")
-    private  String hostName;
-
-    @Value("${redis.port}")
-    private  int port;
-
-    @Value("${redis.timeout}")
-    private  int timeout;
-
+/**
+ * Created by Administrator on 2019/4/3.
+ */
+//@Configuration
+public class RedisConfig_cluster {
     @Value("${redis.maxIdle}")
     private Integer maxIdle;
 
@@ -49,15 +46,14 @@ public class RedisConfig {
     private boolean testWhileIdle;
 
 
-//    @Value("${spring.redis.cluster.nodes}")
-//    private String clusterNodes;
-//
-//    @Value("${spring.redis.cluster.max-redirects}")
-//    private Integer mmaxRedirectsac;
+    @Value("${spring.redis.cluster.nodes}")
+    private String clusterNodes;
+
+    @Value("${spring.redis.cluster.max-redirects}")
+    private Integer mmaxRedirectsac;
 
     /**
      * JedisPoolConfig 连接池
-     *
      * @return
      */
     @Bean
@@ -81,31 +77,45 @@ public class RedisConfig {
         jedisPoolConfig.setTestWhileIdle(testWhileIdle);
         return jedisPoolConfig;
     }
-
     /**
-     * 单机版配置
-     *
-     * @param @param  jedisPoolConfig
-     * @param @return
-     * @return JedisConnectionFactory
+     * Redis集群的配置
+     * @return RedisClusterConfiguration
+     * @autor zhouxian
+     * @date 2019年4月3日
      * @throws
-     * @Title: JedisConnectionFactory
-     * @autor lpl
-     * @date 2018年2月24日
      */
     @Bean
-    public JedisConnectionFactory JedisConnectionFactory(JedisPoolConfig jedisPoolConfig) {
-        JedisConnectionFactory JedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig);
-        //连接池
-        JedisConnectionFactory.setPoolConfig(jedisPoolConfig);
-        //IP地址
-        JedisConnectionFactory.setHostName(hostName);
-        //端口号
-        JedisConnectionFactory.setPort(port);
-        //如果Redis设置有密码
-        //JedisConnectionFactory.setPassword(password);
-        //客户端超时时间单位是毫秒
-        JedisConnectionFactory.setTimeout(timeout);
+    public RedisClusterConfiguration redisClusterConfiguration(){
+        RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration();
+        //Set<RedisNode> clusterNodes
+        String[] serverArray = clusterNodes.split(",");
+
+        Set<RedisNode> nodes = new HashSet<RedisNode>();
+
+        for(String ipPort:serverArray){
+            String[] ipAndPort = ipPort.split(":");
+            nodes.add(new RedisNode(ipAndPort[0].trim(),Integer.valueOf(ipAndPort[1])));
+        }
+
+        redisClusterConfiguration.setClusterNodes(nodes);
+        redisClusterConfiguration.setMaxRedirects(mmaxRedirectsac);
+
+        return redisClusterConfiguration;
+    }
+    /**
+     * 配置工厂
+     * @Title: JedisConnectionFactory
+     * @param @param jedisPoolConfig
+     * @param @return
+     * @return JedisConnectionFactory
+     * @autor zhouxian
+     * @date 2019年4月3日
+     * @throws
+     */
+    @Bean
+    public JedisConnectionFactory JedisConnectionFactory(JedisPoolConfig jedisPoolConfig, RedisClusterConfiguration redisClusterConfiguration){
+        JedisConnectionFactory JedisConnectionFactory = new JedisConnectionFactory(redisClusterConfiguration,jedisPoolConfig);
+
         return JedisConnectionFactory;
     }
 
@@ -120,7 +130,6 @@ public class RedisConfig {
         initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
         return redisTemplate;
     }
-
     /**
      * 设置数据存入 redis 的序列化方式,并开启事务
      *
@@ -128,14 +137,13 @@ public class RedisConfig {
      * @param factory
      */
     private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
-        //如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！
+        //如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！  
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         // 开启事务
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.setConnectionFactory(factory);
     }
 }
-

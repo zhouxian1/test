@@ -16,7 +16,7 @@ mysql:
       maxWait: 60000
       poolPreparedStatements: true
       filters: stat
-      url: jdbc:mysql://localhost:3306/shiro?useUnicode=true&characterEncoding=utf-8
+      url: jdbc:mysql://172.20.10.14:3306/shiro?useUnicode=true&characterEncoding=utf-8
       maxPoolPreparedStatementPerConnectionSize: 50
       password: root
       testOnBorrow: false
@@ -38,7 +38,7 @@ mysql:
       maxWait: 60000
       poolPreparedStatements: true
       filters: stat
-      url: jdbc:mysql://localhost:3306/shiro?useUnicode=true&characterEncoding=utf-8
+      url: jdbc:mysql://172.20.10.2:3306/shiro?useUnicode=true&characterEncoding=utf-8
       maxPoolPreparedStatementPerConnectionSize: 50
       password: root
       testOnBorrow: false
@@ -52,20 +52,29 @@ mysql:
       username: root
     readSize: 2
 redis:
-  hostName: localhost
-  maxWaitMillis: 1000
-  password:
-  testOnBorrow: true
-  testWhileIdle: true
-  maxIdle: 300
-  port: 6379
-  timeBetweenEvictionRunsMillis: 30000
-  minEvictableIdleTimeMillis: 300000
-  maxTotal: 1000
-  timeout: 10000
-  numTestsPerEvictionRun: 1024
+     hostName: localhost
+     #password:
+     port: 6379
+     timeout: 10000
+     maxWaitMillis: 1000
+     testOnBorrow: true
+     testWhileIdle: true
+     maxIdle: 300
+     minEvictableIdleTimeMillis: 300000
+     timeBetweenEvictionRunsMillis: 30000
+     maxTotal: 1000
+     numTestsPerEvictionRun: 1024
+     #哨兵模式根据名称自动选择master
+     sentinel:
+        master: mymaster
+        nodes: 192.168.2.183:7000,192.168.2.183:7001,192.168.2.183:7002
+cluster:
+      nodes: 192.168.2.183:7000,192.168.2.183:7001,192.168.2.183:7002,192.168.2.183:7003,192.168.2.183:7004,192.168.2.183:7005
+      max-redirects: 3
+data:
+      mongodb:
+          uri: mongodb://admin:admin@127.0.0.1:27017,127.0.0.1:27017,127.0.0.1:27017
+          database: PcWeb
 
-
-  mapper-locations: classpath:com/geovis/mapper/xml/*.xml
-  mybatis:
-  type-aliases-package: com.geovis.entity
+mapper-locations: classpath:com/geovis/mapper/xml/*.xml
+mybatis:type-aliases-package: com.geovis.entity
